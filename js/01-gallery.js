@@ -31,8 +31,16 @@ function selectImage(event) {
 
   const selectedImage = event.target.dataset.source;
 
-  const originalImage = basicLightbox.create(`<img src=${selectedImage}>`);
-
+  const originalImage = basicLightbox.create(`<img src=${selectedImage}>`,
+    {
+      onShow: () => {
+        window.addEventListener("keydown", modalClose);
+      },
+      onClose: () => {
+        window.removeEventListener("keydown", modalClose);
+      },
+    }
+  );
   originalImage.show();
 
   galleryImages.addEventListener("keydown", modalClose);
@@ -42,6 +50,7 @@ function selectImage(event) {
 
     originalImage.close();
   }
+
 
 
 }
